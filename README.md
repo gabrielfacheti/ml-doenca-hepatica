@@ -13,30 +13,21 @@ O dataset é composto por 583 linhas e 11 colunas, com informações médicas do
 <h2>Metodologia</h2>
 
 <h3>Exploratory Data Analysis</h3>
-Neste momento foi feita a separação entre variáveis categóricas e numéricas, para que ambos os tipos de variáveis pudessem ser avaliados separadamente. A exploração foi feita através de gráficos de distribuição de frequência e de estudos das relações entre as variáveis. Além disso, foi feita uma análise para identificação e remoção de dados duplicados e ausentes.
+Aqui foi feita a separação entre variáveis categóricas e numéricas, para que ambos os tipos de variáveis pudessem ser avaliados separadamente. A exploração foi feita através de histogramas na análise univariada e de gráficos de dispersão na análise bivariada. Além disso, foi feita uma análise para identificação e remoção de dados duplicados e ausentes. Outliers foram removidos e os valores ausentes foram imputados com a função <code>KNNImputer</code>.
 
-<h3>Data Preprocessing</h3>
-During data preprocessing, the following steps were applied to prepare the dataset for clustering:
+<h3>Pré-Processamento de dados</h3>
+Durante o pré-processamento, uma das variáveis foi removida por apresentar elevada correlação com outra variável preditora, o que pode indicar colinearidade – ocorre quando duas variáveis carregam basicamente a mesma informação, o que pode tornar o modelo tendencioso. Ademais, os dados foram divididos em dados de treino e teste, usando a proporção de 75/25, respectivamente.
 <ul>
-	<li><b>Missing Value Imputation:</b> Missing values in the dataset were handled using <code>KNNImputer</code>, which utilizes the k-nearest neighbors algorithm to impute missing values based on the information from neighboring samples.</li>
-	<li><b>Standardization:</b> Numerical features were standardized using <code>StandardScaler</code>, ensuring that all features were on a similar scale. Standardization is crucial for clustering algorithms to work effectively, as it prevents features with larger scales from dominating the clustering process.</li>
-  <li><b>Dimensionality Reduction:</b> Principal Component Analysis (PCA) was utilized to reduce the dimensionality of the data to 2. This transformation allowed for visualization of the data in a 2D space, making it easier to interpret the results of clustering.</li>
+	<li><b>Balanceamento de classes:</b> O subset de treino teve de ser balanceado por conta da grande diferença entre as classes positivas e negativas. Tal balanceamento é importante para que o modelo não favoreça uma das classes durante o treinamento. Para isso, usou-se a função <code>SMOTE</code> da biblioteca <b>imblearn</b>. </li>
+	<li><b>Padronização:</b> As variáveis numéricas foram padronizadas usando a função <code>StandardScaler</code>, para garantir que todas tivessem uma distribuição parecida (próxima de uma normal).</li>
 </ul>
 
-<h3>Clustering Models</h3>
-Two clustering algorithms, <code>K-Means</code> and <code>DBSCAN</code>, were experimented with to group customers based on their behavioral variables. K-Means is a centroid-based clustering algorithm, while DBSCAN is a density-based clustering algorithm. Both approaches have different strengths and may yield different cluster structures.
+<h3>Seleção dos modelos</h3>
+Cinco algoritmos diferentes – Regressão Logística, Decision Tree, Random Forest, K-Nearest Neighbors e Support Vector Machines (SVM) – foram testados e avaliados em uma validação cruzada (com <code>StratifiedKFold</code>), usando métricas como acurácia, ROC AUC Score e F1 Score. Os resultados foram guardados em um DataFrame para posterior comparação.<br>
+O modelo com os melhores resultados foi o Random Forest. Com isso, foi feita a tunagem dos principais hiperparâmetros, a fim de garantir o melhor desempenho possível em teste.
 
-<h3>Model Selection and Profiling</h3>
-After evaluating the performance of both clustering models, the K-Means model was selected for customer segmentation. The K-Means model was used to create distinct clusters of customers based on their credit card usage behavior. Once the clusters were defined, profiling of each cluster was conducted to gain insights into the characteristics and preferences of customers within each group. This information can be used to tailor marketing strategies and improve customer engagement.
-
-<h2>Results</h2>
-<p>Below are the clusters obtained by each algorithm. Since K-Means had a better performance, it was chosen to do profiling.</p><br>
-
-<b>K-Means</b>
-![K-Means](kmeans_clusters.png)
-
-<b>DBSCAN</b>
-![K-Means](dbscan_clusters.png)
+<h2>Resultados</h2>
+Por fim, utilizando o modelo já treinado e com os melhores hiperparâmetros, foi feita uma previsão utilizando dados hipotéticos, que passaram pelos mesmos processamentos que os dados de treino e teste. Nesta análise foi previsto que o paciente deve apresentar doença hepática.<br>
 
 </body>
 </html>
