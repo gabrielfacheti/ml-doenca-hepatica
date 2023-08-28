@@ -4,7 +4,7 @@
 <body>
 
 <h1>Machine Learning: Previsão de doença hepática</h1>
-Este notebook foi desenvolvido como parte da especialização em Ciência de Dados que eu estou cursando na Data Science Academy. 
+Este notebook foi desenvolvido como parte da especialização em Ciência de Dados que eu estou cursando na Data Science Academy.<br>
 O objetivo é prever se um paciente terá ou não uma doença hepática com base em dados de exames médicos.<br>
 
 <h2>Dataset</h2>
